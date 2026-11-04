@@ -44,3 +44,4 @@ EXECUTE FUNCTION set_updated_at();
 -- VALUES
 --   ('Buy groceries', 'Milk, eggs, bread, coffee'),
 --   ('Read a book',   NULL);
+

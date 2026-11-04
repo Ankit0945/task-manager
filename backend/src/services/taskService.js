@@ -32,11 +32,12 @@ async function getTaskById(id) {
  * @param {{ title: string, description?: string }} data
  */
 async function createTask({ title, description }) {
+  const safeTitle = typeof title === 'string' ? title.trim() : '';
   const { rows } = await db.query(
     `INSERT INTO tasks (title, description)
      VALUES ($1, $2)
      RETURNING *`,
-    [title.trim(), description ? description.trim() : null]
+    [safeTitle, description ? description.trim() : null]
   );
   return rows[0];
 }
@@ -87,3 +88,4 @@ async function deleteTask(id) {
 }
 
 module.exports = { getAllTasks, getTaskById, createTask, updateTask, deleteTask };
+

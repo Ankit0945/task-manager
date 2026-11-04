@@ -63,3 +63,4 @@ async function close() {
 }
 
 module.exports = { query, ping, close };
+

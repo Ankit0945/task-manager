@@ -15,15 +15,24 @@ const validate       = require('../middleware/validate');
 
 const router = express.Router();
 
-// ── Shared validation rules ────────────────────────────────────────────────────
+// ── Validation rules ────────────────────────────────────────────────────────
 
-const titleRules = body('title')
+const createTitleRules = body('title')
+  .isString().withMessage('Title must be a string')
   .trim()
   .notEmpty().withMessage('Title is required')
   .isLength({ max: 255 }).withMessage('Title must be 255 characters or fewer');
 
+const updateTitleRules = body('title')
+  .optional()
+  .isString().withMessage('Title must be a string')
+  .trim()
+  .notEmpty().withMessage('Title cannot be empty')
+  .isLength({ max: 255 }).withMessage('Title must be 255 characters or fewer');
+
 const descriptionRules = body('description')
   .optional({ nullable: true })
+  .isString().withMessage('Description must be a string')
   .trim()
   .isLength({ max: 2000 }).withMessage('Description must be 2 000 characters or fewer');
 
@@ -42,7 +51,7 @@ router.get('/:id', taskController.getTask);
 // POST /api/tasks
 router.post(
   '/',
-  [titleRules, descriptionRules],
+  [createTitleRules, descriptionRules],
   validate,
   taskController.createTask
 );
@@ -51,7 +60,7 @@ router.post(
 router.patch(
   '/:id',
   [
-    titleRules.optional(),            // title is optional on PATCH
+    updateTitleRules,
     descriptionRules,
     completedRules,
   ],
@@ -63,3 +72,4 @@ router.patch(
 router.delete('/:id', taskController.deleteTask);
 
 module.exports = router;
+

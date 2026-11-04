@@ -84,3 +84,4 @@ export function updateTask(id, updates) {
 export function deleteTask(id) {
   return request(`/tasks/${id}`, { method: 'DELETE' });
 }
+

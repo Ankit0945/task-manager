@@ -73,3 +73,4 @@ export function useTasks() {
 
   return { tasks, loading, error, fetchTasks, addTask, toggleTask, removeTask };
 }
+
